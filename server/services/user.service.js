@@ -18,6 +18,7 @@ class userService extends baseHandler {
       }
       const hashPassword = encryptPassword(payload.password);
       payload.password = hashPassword;
+      
       const result = await this._userRepo.insertOne(payload);
       return this.response({data: result, message: "user created successfully!"}, 200)
     } catch (error) {
