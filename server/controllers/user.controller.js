@@ -8,8 +8,8 @@ class userController {
   register = async (req, res) => {
     try {
       const payload = req.body;
-      const data = await this._userService.createUser(payload);
-      res.status(200).json({ data, message: "user created successfully!" });
+      const result = await this._userService.createUser(payload);
+      res.status(result.status).json(result.data);
     } catch (error) {
       res.status(error.status || 500).json({ message: error.message });
     }

@@ -6,7 +6,7 @@ class userRepository {
       const result = await User.create(payload);
       return result;
     } catch (error) {
-      console.error('Error inserting one user:', error);
+      console.error(error);
       throw error;
     }
   }
@@ -16,7 +16,17 @@ class userRepository {
       const results = await User.bulkCreate(data);
       return results;
     } catch (error) {
-      console.error('Error inserting many users:', error);
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async findOne(filters) {
+    try {
+      const results = await User.findOne(filters);
+      return results;
+    } catch (error) {
+      console.error(error);
       throw error;
     }
   }
