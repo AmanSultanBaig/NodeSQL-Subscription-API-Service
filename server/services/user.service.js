@@ -1,4 +1,4 @@
-const { encryptPassword } = require("../helpers/bcrypt");
+const { encryptPassword, decryptPassword } = require("../helpers/bcrypt");
 const userRepository = require("../repositories/user.repository");
 const baseHandler = require("../helpers/baseClass")
 
@@ -10,9 +10,10 @@ class userService extends baseHandler {
 
   async createUser(payload) {
     try {
-      const isRecordExists = await this._userRepo.findOne({ where: { email: payload.email }});
+      const { email, username } = payload;
+      const isRecordExists = await this._userRepo.findOne({ where: { email, username }});
       if(isRecordExists) {
-        return this.response({data: null, message: "email already exists!"}, 409)
+        return this.response({data: null, message: "email or username already exists!"}, 409)
       }
       const hashPassword = encryptPassword(payload.password);
       payload.password = hashPassword;
@@ -23,6 +24,26 @@ class userService extends baseHandler {
       throw error;
     }
   }
+
+  async findUser(payload) {
+    try {
+      const { email, password } = payload;
+      let userFound = await this._userRepo.findOne({ where: { email } });
+      if(!userFound) {
+        return this.response({data: null, message: "user not found"}, 404)
+      }
+      userFound = userFound.toJSON();
+      const isPassMatched = decryptPassword(password, userFound.password);
+      if(!isPassMatched) {
+        return this.response({data: null, message: "incorrect password"}, 401)
+      }
+      delete userFound.password;
+      return this.response({data: userFound, message: "user login successfully!"}, 200)
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
 
 module.exports = userService;

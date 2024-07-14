@@ -6,7 +6,7 @@ require("dotenv").config();
 const routes = require("./routes/index.routes");
 
 app.use(express.json())
-app.use("/api",routes.users);
+app.use("/",routes);
 
 (async () => {
   await sequelize.sync({ force: false });
