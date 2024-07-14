@@ -1,6 +1,7 @@
 const { encryptPassword, decryptPassword } = require("../helpers/bcrypt");
 const userRepository = require("../repositories/user.repository");
-const baseHandler = require("../helpers/baseClass")
+const baseHandler = require("../helpers/baseClass");
+const { createToken } = require("../helpers/jwt");
 
 class userService extends baseHandler {
   constructor() {
@@ -38,7 +39,10 @@ class userService extends baseHandler {
         return this.response({data: null, message: "incorrect password"}, 401)
       }
       delete userFound.password;
-      return this.response({data: userFound, message: "user login successfully!"}, 200)
+
+      const accessToken = createToken(userFound);
+
+      return this.response({data: userFound, accessToken, message: "user login successfully!"}, 200)
     } catch (error) {
       throw error;
     }
