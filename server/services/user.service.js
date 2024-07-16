@@ -40,6 +40,8 @@ class userService extends baseHandler {
         return this.response({data: null, message: "incorrect password"}, 401)
       }
       delete userFound.password;
+      delete userFound.createdAt;
+      delete userFound.updatedAt;
 
       const accessToken = createToken(userFound);
 

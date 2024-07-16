@@ -6,10 +6,10 @@ exports.createToken = (payload) => {
 };
 
 exports.authenticateToken = (token) => {
-  try {
-    const decoded = jwt.verify(token, SECRET_KEY);
-    return true;
-  } catch (error) {
-    return false;
-  }
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, SECRET_KEY, (err, data) => {
+      if (err) return resolve(false);
+      resolve(data);
+    });
+  });
 };
