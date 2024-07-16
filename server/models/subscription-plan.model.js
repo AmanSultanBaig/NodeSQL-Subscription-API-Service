@@ -1,43 +1,37 @@
-// models/User.js
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-const User = sequelize.define("User", {
-    first_name: {
+const subscriptionPlan = sequelize.define("subscriptionPlan", {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    last_name: {
+    stripe_price_id: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    phone_no: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    username: {
+    trial_days: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    is_subscripted: {
-      type: DataTypes.STRING,
+    have_trial: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
     },
+    subscription_price: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
-    tableName: "users",
+    tableName: "subscription_plan",
     timestamps: true
   }
 );
 
-module.exports = User;
+module.exports = subscriptionPlan;
