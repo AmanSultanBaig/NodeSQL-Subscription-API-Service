@@ -1,3 +1,4 @@
+const { tokenBlacklist } = require("../middlewares/authenticate.middleware");
 const userService = require("../services/user.service");
 
 class userController {
@@ -24,6 +25,14 @@ class userController {
       res.status(error.status || 500).json({ message: error.message });
     }
   }
+
+  logout = async (req, res) => {
+      const token = req.headers['authorization'].split(" ")[1];
+      tokenBlacklist.push(token);
+    
+      res.json({ message: 'Logout successful' });
+  }
 }
+
 
 module.exports = userController;
