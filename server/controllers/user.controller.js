@@ -26,6 +26,14 @@ class userController {
     }
   }
 
+  userProfile = async (req, res) => {
+    try {
+      res.status(200).json(res.user);
+    } catch (error) {
+      res.status(error.status || 500).json({ message: error.message });
+    }
+  }
+
   logout = async (req, res) => {
       const token = req.headers['authorization'].split(" ")[1];
       tokenBlacklist.push(token);
