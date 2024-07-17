@@ -10,7 +10,7 @@ app.use(express.json())
 app.use("/",routes);
 
 (async () => {
-  await sequelize.sync({ force: false });
+  await sequelize.sync({ force: false, alter: true });
   console.log("All models were synchronized successfully.");
 })();
 
