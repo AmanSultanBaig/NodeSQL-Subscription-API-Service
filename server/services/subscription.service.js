@@ -16,6 +16,16 @@ class subscriptionService extends baseHandler {
         throw error;
       }
   }
+
+  async fetchSubscriptionPlans() {
+    try {
+        const result = await this.subsPlanRepo.findSubscriptionPlans();
+        return this.response({data: result, message: "subscription plan fetched successfully!"}, 200)
+      } catch (error) {
+        console.error('Error fetching subscription plan:', error);
+        throw error;
+      }
+  }
 }
 
 module.exports = subscriptionService;
