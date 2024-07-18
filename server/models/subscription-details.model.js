@@ -54,7 +54,6 @@ const subscriptionDetails = sequelize.define('subscriptionDetails', {
     trial_end: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: null,
     },
     is_cancel: {
         type: DataTypes.BOOLEAN,

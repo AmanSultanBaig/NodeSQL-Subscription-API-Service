@@ -23,6 +23,17 @@ class SubscriptionController {
       res.status(error.status || 500).json({ message: error.message });
     }
   };
+
+  getSubscriptionPlanDetails = async (req, res) => {
+    try {
+      const {subscription_plan_id} = req.body; 
+      const filters = {subscription_plan_id, user_id: req.user.id}
+      const result = await this._subscriptionService.getPlanDetails(filters);
+      res.status(result.status).json(result.data);
+    } catch (error) {
+      res.status(error.status || 500).json({ message: error.message });
+    }
+  };
 }
 
 module.exports = SubscriptionController;

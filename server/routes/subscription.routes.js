@@ -7,5 +7,6 @@ const subs = new subscriptionController();
 
 router.post("/add-plan", authenticate, subs.addSubscriptionPlan);
 router.get("/get-plans", authenticate, subs.getSubscriptionPlans);
+router.post("/get-plan-details", authenticate, subs.getSubscriptionPlanDetails);
 
 module.exports = router;
