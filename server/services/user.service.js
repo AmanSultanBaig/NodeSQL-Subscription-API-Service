@@ -12,7 +12,8 @@ class userService extends baseHandler {
   async createUser(payload) {
     try {
       const { email, username } = payload;
-      const isRecordExists = await this._userRepo.findOne({ where: { email, username }});
+      const transformedEmail = email.toLowerCase().trim();
+      const isRecordExists = await this._userRepo.findOne({ where: { email: transformedEmail, username }});
       if(isRecordExists) {
         return this.response({data: null, message: "email or username already exists!"}, 409)
       }
